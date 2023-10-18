@@ -6,7 +6,7 @@ $servings = filter_input(INPUT_POST, 'servings', FILTER_VALIDATE_INT);
 $sweetness = filter_input(INPUT_POST, 'sweetness');
 
 // create new BatchValue object
-$batch = new BatchValue();
+$batch = new BatchValue($servings, $sweetness);
 
 // calculate values
 $batch->calculateAll();
@@ -32,6 +32,8 @@ if ($error_message) {
 
 <body>
   <h1>Batched Old Fashioned Specs</h1>
+
+  <p>WIP: formatting, conversion calc, styling otw</p>
 
   <div id="data">
     <label>Number of servings:</label>

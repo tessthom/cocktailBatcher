@@ -30,10 +30,10 @@ ini_set('display_errors', 1);
 
         <label>Sweetness level:</label>
         <select name="sweetness">
-          <option value="Just enough"></option> <!-- 0.25oz -->
-          <option value="Classic specs" selected></option> <!-- 0.5oz -->
-          <option value="Sweeter"></option> <!-- 0.75oz -->
-          <option value="Wisconsin sweet"></option> <!-- 1.0oz -->
+          <option value="Just enough">Just enough - 0.25oz</option> <!-- 0.25oz -->
+          <option value="Classic specs" selected>Classic specs - 0.5oz</option> <!-- 0.5oz -->
+          <option value="Sweeter">Sweeter - 0.75oz</option> <!-- 0.75oz -->
+          <option value="Wisconsin sweet">Wisconsin sweet - 1.0oz</option> <!-- 1.0oz -->
         </select>
 
         <p>*Calculation for a 1:1 simple syrup</p>
