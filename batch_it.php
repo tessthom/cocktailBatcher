@@ -1,97 +1,91 @@
 <?php
 
-class BatchValue {
+class BatchValue
+{
   public $servings;
   public $sweetness;
   public $bourbon;
-  public $wisc;
-  public $brandy;
   public $simple;
   public $angostura;
   public $water;
   public $oranges;
+  public $total;
 
-  public function __construct() {
-    $this->servings = 0;
-    $this->sweetness = '';
-    $this->bourbon = 0;
-    $this->wisc = FALSE;
-    $this->simple = 0;
-    $this->angostura = 0;
-    $this->oranges = 0;
-  }
-
-  // servings
-  public function setServings($servings) {
+  public function __construct(int $servings = 0, string $sweetness = '')
+  {
     $this->servings = $servings;
-  }
-  public function getServings() {
-    return $this->servings;
-  }
-
-  // wisc
-  public function setWisc($wisc) {
-    $this->wisc = $wisc;
-  }
-  public function getWisc() {
-    return $this->wisc;
-  }
-
-  // brandy 
-  public function setBrandy($brandy) {
-    $this->brandy = $brandy;
-  }
-  public function getBrandy() {
-    return $this->brandy;
+    $this->sweetness = $sweetness;
   }
 
   // bourbon
-  public function setBourbon($bourbon) {
-    if ($this->sweetness != 'Wisconsin sweet') {
-      $this->bourbon = ($bourbon * 2.0) * $this->servings;
+  public function calculateBourbon()
+  {
+    $this->bourbon = $this->servings * 2.0; // 2oz per serving
+  }
+
+  // simple syrup
+  public function calculateSimple()
+  {
+    $sweetnessLevels = [
+      'Just enough' => 0.25,
+      'Classic specs' => 0.5,
+      'Sweeter' => 0.75,
+      'Wisconsin sweet' => 1.0,
+    ];
+
+    $this->simple = $this->servings * $sweetnessLevels[$this->sweetness];
+  }
+
+  // bitters !REWORK LATER TO CALC OZ FOR LARGE BATCHES!
+  public function calculateBitters() {
+    if ($this->servings <= 4) {
+      $this->angostura = $this->servings * 2.0; // 2 dashes per serving
     } else {
-      $this->setWisc(TRUE);
-      $this->brandy = ($bourbon * 2.0) * $this->servings;
-      $this->bourbon = 0;
+      $this->angostura = ($this->servings * 2.0) * 0.5; // 1 dash per serving
     }
   }
+
+  // dilution
+  public function calculateWater() {
+    $this->total = $this->bourbon + $this->simple;
+    $this->water = $this->total * 0.2;
+  }
+
+  // oranges
+  public function calculateOranges() {
+    // std is 1 orange per 8 servings, rounded up
+    $this->oranges = ceil($this->servings / 8);
+  }
+
+  // getter methods
   public function getBourbon() {
     return $this->bourbon;
   }
 
-  // simple syrup
-  public function setSimple($simple) {
-    if ($this->sweetness == 'Just enough') {
-      $this->simple = $simple * 0.25;
-    } else if ($this->sweetness == 'Classic specs') {
-      $this->simple = $simple * 0.5;
-    } else if ($this->sweetness == 'Sweeter') {
-      $this->simple = $simple * 0.75;
-    } else if ($this->sweetness == 'Wisconsin sweet') {
-      $this->simple = $simple * 1.0;
-    }
-    $this->simple = $this->simple * $this->servings;
-  }
   public function getSimple() {
     return $this->simple;
   }
 
-  // angostura bitters
-  public function setBitters($angostura) {
-    $dashes = $this->servings * 2;
-    $this->angostura = $dashes / 48;
-    if ($this->servings > 4) {
-      $this->angostura = ($angostura * 0.5) * $this->servings;
-    } else {
-      $this->angostura = $angostura * $this->servings; // come back to dashes output later
-    }
-  }
   public function getBitters() {
     return $this->angostura;
   }
 
+  public function getWater() {
+    return $this->water;
+  }
+
+  // calculate all values
+  public function calculateAll() {
+    $this->calculateBourbon();
+    $this->calculateSimple();
+    $this->calculateBitters();
+    $this->calculateWater();
+    $this->calculateOranges();
+  }
+
   // validate servings
-  public function validate() {
+  public function validate()
+  {
     $error_message = '';
 
     if ($this->servings === false) {

@@ -1,5 +1,5 @@
 <?php
-require_once 'batch.php';
+require_once 'batch_it.php';
 
 // display any errors
 error_reporting(E_ALL);
@@ -26,12 +26,12 @@ ini_set('display_errors', 1);
     <form action="display_results.php" method="post">
       <div id="data">
         <label>Number of servings:</label>
-        <input type="text" name="servings" value="<?php echo $servings; ?>"><br>
+        <input type="text" name="servings"><br>
 
         <label>Sweetness level:</label>
         <select name="sweetness">
           <option value="Just enough"></option> <!-- 0.25oz -->
-          <option value="Classic specs"></option> <!-- 0.5oz -->
+          <option value="Classic specs" selected></option> <!-- 0.5oz -->
           <option value="Sweeter"></option> <!-- 0.75oz -->
           <option value="Wisconsin sweet"></option> <!-- 1.0oz -->
         </select>

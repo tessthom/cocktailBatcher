@@ -8,9 +8,8 @@ $sweetness = filter_input(INPUT_POST, 'sweetness');
 // create new BatchValue object
 $batch = new BatchValue();
 
-// set object properties
-$batch->servings = $servings;
-$batch->sweetness = $sweetness;
+// calculate values
+$batch->calculateAll();
 
 // validate data
 $error_message = $batch->validate();
@@ -23,12 +22,14 @@ if ($error_message) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Batched Old Fashioned Specs</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <h1>Batched Old Fashioned Specs</h1>
 
@@ -53,4 +54,5 @@ if ($error_message) {
 
     <p>Batched on <?php echo date('m/d/y'); ?></p>
 </body>
+
 </html>
